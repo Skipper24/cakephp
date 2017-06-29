@@ -157,11 +157,12 @@ class CommandRunner
                 " Run `{$this->root} --help` to get the list of valid commands."
             );
         }
-        $classOrInstance = $commands->get($name);
-        if (is_string($classOrInstance)) {
-            return new $classOrInstance($io);
+        $instance = $commands->get($name);
+        if (is_string($instance)) {
+            $instance = new $instance($io);
         }
+        $instance->setRootName($this->root);
 
-        return $classOrInstance;
+        return $instance;
     }
 }
